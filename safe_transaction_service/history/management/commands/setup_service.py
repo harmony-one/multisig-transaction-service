@@ -58,15 +58,15 @@ class Command(BaseCommand):
         self.setup_my_network()
 
     def setup_my_network(self):
-        SafeMasterCopy.objects.get_or_create(address='0x02d954F1a5B79063c8D44b7eE6810FcDb28d0b07',
+        SafeMasterCopy.objects.get_or_create(address='0x0F2f043DBc72D3948bB7E392E6E3258dc2743376',
                                              defaults={
-                                                 'initial_block_number': 7976872,
-                                                 'tx_block_number': 7976872,
+                                                 'initial_block_number': 8150505,
+                                                 'tx_block_number': 8150505,
                                              })
-        ProxyFactory.objects.get_or_create(address='0x3793b20768821E29AE568299708aF41136Bac317',
+        ProxyFactory.objects.get_or_create(address='0xAaCf9eb6614f7C110EF9b7D832BCe2E67EEC08c1',
                                            defaults={
-                                               'initial_block_number': 7976877,
-                                               'tx_block_number': 7976877,
+                                               'initial_block_number': 8150510,
+                                               'tx_block_number': 8150510,
                                            })
     def _setup_safe_master_copies(self, safe_master_copies: Sequence[Tuple[str, int, str]]):
         for address, initial_block_number, version in safe_master_copies:
