@@ -81,7 +81,7 @@ class InternalTxIndexer(EthereumIndexer):
         addresses_set = set(addresses)  # More optimal to use `in`
         try:
             block_numbers = list(range(from_block_number, to_block_number + 1))
-            traces = self.ethereum_client.parity.trace_blocks(block_numbers)
+            traces = self.ethereum_client.parity.trace_blocks(block_numbers, addresses)
 
             logger.debug("---traces %s", traces)
             logger.info("---block %s  -- %s", from_block_number, to_block_number)
