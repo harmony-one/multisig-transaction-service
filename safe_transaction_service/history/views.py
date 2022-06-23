@@ -36,6 +36,8 @@ from .services.collectibles_service import CollectiblesServiceProvider
 from .services.safe_service import CannotGetSafeInfo
 from .utils import parse_boolean_query_param
 
+from gnosis.eth import EthereumClient
+
 
 class AboutView(APIView):
     """
@@ -567,6 +569,14 @@ class SafeInfoView(APIView):
 
 class MasterCopiesView(ListAPIView):
     serializer_class = serializers.MasterCopyResponseSerializer
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        ethereum_client = EthereumClient(settings.ETHEREUM_TRACING_NODE_URL)
+        context['blockchain_block_number'] = ethereum_client.current_block_number
+        context['is_synced_threshold'] = settings.IS_SYNCED_THRESHOLD
+        return context
+
     queryset = SafeMasterCopy.objects.all()
     pagination_class = None
 
