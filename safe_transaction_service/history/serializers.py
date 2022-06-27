@@ -511,6 +511,15 @@ class MasterCopyResponseSerializer(serializers.Serializer):
     version = serializers.CharField()
     deployed_block_number = serializers.IntegerField(source='initial_block_number')
     last_indexed_block_number = serializers.IntegerField(source='tx_block_number')
+    class Meta:
+        fields = ('address', 'version', 'deployed_block_number', 'last_indexed_block_number', 'is_synced')
+
+    is_synced = serializers.SerializerMethodField('_is_synced')
+    def _is_synced(self, obj):
+        blockchain_height = self.context.get("blockchain_block_number")
+        threshold = self.context.get("is_synced_threshold")
+        # logger.info('blockchain_height=%d, tx_block_number = %d, threshold=%d', blockchain_height, obj.tx_block_number, threshold)
+        return blockchain_height - obj.tx_block_number <= threshold
 
 
 class OwnerResponseSerializer(serializers.Serializer):
